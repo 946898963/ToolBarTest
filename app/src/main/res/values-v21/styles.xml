@@ -1,27 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="AppTheme.Base">
-        <!-- toolbar颜色 -->
-        <item name="colorPrimary">#4876FF</item>
-        <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">#3A5FCD</item>
-        <!-- 窗口的背景颜色 -->
-        <item name="android:windowBackground">@android:color/white</item>
-        <!-- SearchView -->
-        <item name="searchViewStyle">@style/MySearchView</item>
+        <!-- Customize your theme here. -->
+        <!--Navigation bar color   仅能在 API v21 也就是 Android 5 以后的版本中使用 -->
+        <item name="android:navigationBarColor">@color/accent_material_light</item>
     </style>
-
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- toolbar颜色 -->
-        <item name="colorPrimary">#4876FF</item>
-        <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">#3A5FCD</item>
-        <!-- 窗口的背景颜色 -->
-        <item name="android:windowBackground">@android:color/white</item>
-        <!-- SearchView -->
-        <item name="searchViewStyle">@style/MySearchView</item>
-    </style>
-
-    <style name="MySearchView" parent="Widget.AppCompat.SearchView" />
 </resources>
