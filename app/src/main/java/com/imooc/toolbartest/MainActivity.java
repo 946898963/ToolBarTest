@@ -10,6 +10,9 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
@@ -19,24 +22,48 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private ListView list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        list = (ListView) findViewById(R.id.list);
+        String[] strs = new String[]{"zhangsan","lisi","wangwu","wangermazi"};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strs);
+        list.setAdapter(arrayAdapter);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setLogo(R.drawable.ic_launcher);
         // 标题的文字需在setSupportActionBar之前，不然会无效
-        mToolbar.setTitle("主标题");
-        mToolbar.setSubtitle("副标题");
-        setSupportActionBar(mToolbar);
+        mToolbar.setTitle("主标题打开状态");
+        mToolbar.setSubtitle("副标题打开状态");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.ic_launcher);
+
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);// 给左上角图标的左边加上一个返回的图标  在代码中加上去掉没影响
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar,
+                this, mDrawerLayout,mToolbar,
                 R.string.abc_action_bar_home_description,
-                R.string.abc_action_bar_home_description_format);
-        mDrawerToggle.syncState();
+                R.string.abc_action_bar_home_description_format){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mToolbar.setTitle("主标题关闭状态");
+                mToolbar.setSubtitle("副标题关闭状态");
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                mToolbar.setTitle("主标题打开状态");
+                mToolbar.setSubtitle("副标题打开状态");
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        mDrawerToggle.syncState();//指示ActionBarDrawerToggle与DrawerLayout的状态同步，并将ActionBarDrawerToggle中的drawer图标，设置为ActionBar的Home-Button的icon
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		// 菜单的监听可以在toolbar里设置，
@@ -58,6 +85,23 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    /*@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Toast.makeText(MainActivity.this,
+                        "action_settings", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -69,4 +113,8 @@ public class MainActivity extends ActionBarActivity {
         mShareActionProvider.setShareIntent(intent);
         return super.onCreateOptionsMenu(menu);
     }
+
+
+
+
 }
